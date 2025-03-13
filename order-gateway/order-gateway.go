@@ -1,11 +1,16 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	otellib "github.com/sklrsn/FAG/lib/otel"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
 )
 
 func init() {}
@@ -20,11 +25,25 @@ type Order struct {
 	OrderID string `json:"order_id"`
 }
 
+const ServiceName = "order-gateway"
+
+var (
+	tracer = otel.Tracer(ServiceName)
+)
+
 func main() {
+	otelShutdownFunc, err := otellib.SetupOTel(context.Background())
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	defer otelShutdownFunc(context.Background())
 
 	router := mux.NewRouter()
 
 	router.HandleFunc("/order-gateway/buy", func(w http.ResponseWriter, r *http.Request) {
+		ctx, span := tracer.Start(r.Context(), "/order-gateway/buy")
+		defer span.End()
+
 		var po PurchaseOrder
 		if err := json.NewDecoder(r.Body).Decode(&po); err != nil {
 			http.Error(w, "invalid request data", http.StatusBadRequest)
@@ -34,7 +53,7 @@ func main() {
 		// SAGA Pattern
 		sagaOrchestrator := new(SagaOrchestrator)
 
-		orderID, err := sagaOrchestrator.Process(po)
+		orderID, err := sagaOrchestrator.Process(ctx, po)
 		if err != nil {
 			http.Error(w, "failed to process order", http.StatusBadRequest)
 			return
@@ -57,5 +76,13 @@ func main() {
 		http.MethodPost,
 	)
 
-	log.Fatalf("%v", http.ListenAndServe(":8080", router))
+	server := http.Server{
+		Addr:    fmt.Sprintf(":%v", 8080),
+		Handler: otelhttp.NewHandler(router, "/"),
+	}
+	server.RegisterOnShutdown(func() {
+		log.Println("order-gateway is shutting down")
+	})
+
+	log.Fatalf("%v", server.ListenAndServe())
 }
