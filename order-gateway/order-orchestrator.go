@@ -8,6 +8,6 @@ import (
 type SagaOrchestrator struct {
 }
 
-func (so *SagaOrchestrator) Process(ctx context.Context, order PurchaseOrder) (string, error) {
+func (so *SagaOrchestrator) Orchestrate(ctx context.Context, order PurchaseOrder) (string, error) {
 	return "", fmt.Errorf("not implemented")
 }

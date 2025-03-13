@@ -53,7 +53,7 @@ func main() {
 		// SAGA Pattern
 		sagaOrchestrator := new(SagaOrchestrator)
 
-		orderID, err := sagaOrchestrator.Process(ctx, po)
+		orderID, err := sagaOrchestrator.Orchestrate(ctx, po)
 		if err != nil {
 			http.Error(w, "failed to process order", http.StatusBadRequest)
 			return
