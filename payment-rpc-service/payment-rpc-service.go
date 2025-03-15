@@ -70,11 +70,9 @@ func (ps PaymentRPCService) Release(ctx context.Context, rr *payment.ReleaseRequ
 func processReleaseRequest(ctx context.Context, rr *payment.ReleaseRequest) {} // do nothing
 
 func main() {
-	otelShutdownFunc, err := otellib.SetupOTel(context.Background())
-	if err != nil {
+	if err := otellib.SetupOTel(context.Background()); err != nil {
 		log.Fatalf("%v", err)
 	}
-	defer otelShutdownFunc(context.Background())
 
 	listener, err := net.Listen("tcp", ":9092")
 	if err != nil {

@@ -67,11 +67,9 @@ func (ps ShippingRPCService) Retract(ctx context.Context, rr *shipping.RetractRe
 func processRetractRequest(ctx context.Context, dr *shipping.RetractRequest) {}
 
 func main() {
-	otelShutdownFunc, err := otellib.SetupOTel(context.Background())
-	if err != nil {
+	if err := otellib.SetupOTel(context.Background()); err != nil {
 		log.Fatalf("%v", err)
 	}
-	defer otelShutdownFunc(context.Background())
 
 	listener, err := net.Listen("tcp", ":9093")
 	if err != nil {

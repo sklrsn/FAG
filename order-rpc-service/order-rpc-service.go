@@ -59,11 +59,9 @@ func (os OrderRPCService) Release(ctx context.Context, rr *order.ReleaseRequest)
 func processReleaseRequest(ctx context.Context, rr *order.ReleaseRequest) {}
 
 func main() {
-	otelShutdownFunc, err := otellib.SetupOTel(context.Background())
-	if err != nil {
+	if err := otellib.SetupOTel(context.Background()); err != nil {
 		log.Fatalf("%v", err)
 	}
-	defer otelShutdownFunc(context.Background())
 
 	listener, err := net.Listen("tcp", ":9091")
 	if err != nil {

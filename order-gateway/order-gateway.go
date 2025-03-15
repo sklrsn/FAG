@@ -32,11 +32,9 @@ var (
 )
 
 func main() {
-	otelShutdownFunc, err := otellib.SetupOTel(context.Background())
-	if err != nil {
+	if err := otellib.SetupOTel(context.Background()); err != nil {
 		log.Fatalf("%v", err)
 	}
-	defer otelShutdownFunc(context.Background())
 
 	router := mux.NewRouter()
 
