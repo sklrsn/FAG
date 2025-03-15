@@ -21,7 +21,7 @@ type SagaOrchestrator struct {
 var (
 	orderEngineUrl    = os.Getenv("ORDER_ENGINE_ADDRESS")    //"localhost:9091"
 	paymentEngineUrl  = os.Getenv("PAYMENT_ENGINE_ADDRESS")  //"localhost:9092"
-	shippingEngineUrl = os.Getenv("SHIIPING_ENGINE_ADDRESS") //"localhost:9093"
+	shippingEngineUrl = os.Getenv("SHIPPING_ENGINE_ADDRESS") //"localhost:9093"
 )
 
 func (so *SagaOrchestrator) Init() error {
