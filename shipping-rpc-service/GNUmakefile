@@ -13,4 +13,5 @@ build:
 
 .PHONY: push
 push:
-	docker push shipping-rpc-engine:latest
+	docker tag shipping-rpc-engine:latest sklrsn/shipping-rpc-engine:latest
+	docker push sklrsn/shipping-rpc-engine:latest

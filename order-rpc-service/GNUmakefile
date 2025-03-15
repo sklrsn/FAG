@@ -13,4 +13,5 @@ build:
 
 .PHONY: push
 push:
-	docker push order-rpc-engine:latest
+	docker tag order-rpc-engine:latest sklrsn/order-rpc-engine:latest
+	docker push sklrsn/order-rpc-engine:latest

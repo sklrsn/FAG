@@ -13,4 +13,5 @@ build:
 
 .PHONY: push
 push:
-	docker push payment-rpc-engine:latest
+	docker tag payment-rpc-engine:latest sklrsn/payment-rpc-engine:latest
+	docker push sklrsn/payment-rpc-engine:latest

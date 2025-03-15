@@ -13,4 +13,5 @@ build:
 
 .PHONY: push
 push:
-	docker push order-gateway:latest
+	docker tag order-gateway:latest sklrsn/order-gateway:latest
+	docker push sklrsn/order-gateway:latest
