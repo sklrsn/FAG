@@ -37,6 +37,11 @@ func main() {
 	}
 
 	router := mux.NewRouter()
+	// SAGA Pattern
+	sagaOrchestrator := new(SagaOrchestrator)
+	if err := sagaOrchestrator.Init(); err != nil {
+		panic(err)
+	}
 
 	router.HandleFunc("/order-gateway/buy", func(w http.ResponseWriter, r *http.Request) {
 		ctx, span := tracer.Start(r.Context(), "/order-gateway/buy")
@@ -47,9 +52,6 @@ func main() {
 			http.Error(w, "invalid request data", http.StatusBadRequest)
 			return
 		}
-
-		// SAGA Pattern
-		sagaOrchestrator := new(SagaOrchestrator)
 
 		orderID, err := sagaOrchestrator.Orchestrate(ctx, po)
 		if err != nil {
