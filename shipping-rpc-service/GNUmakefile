@@ -1,7 +1,7 @@
 .DEFAULT_GOAL:all
 
 .PHONY: all
-all: compile build
+all: compile build push
 
 .PHONY: compile
 compile:
@@ -10,3 +10,7 @@ compile:
 .PHONY: build
 build:
 	docker build -t shipping-rpc-engine:latest .
+
+.PHONY: push
+push:
+	docker push shipping-rpc-engine:latest

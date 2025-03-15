@@ -1,7 +1,7 @@
 .DEFAULT_GOAL:all
 
 .PHONY: all
-all: compile build
+all: compile build push
 
 .PHONY: compile
 compile:
@@ -10,3 +10,7 @@ compile:
 .PHONY: build
 build:
 	docker build -t order-gateway:latest .
+
+.PHONY: push
+push:
+	docker push order-gateway:latest
