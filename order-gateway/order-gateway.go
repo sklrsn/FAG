@@ -71,6 +71,7 @@ func main() {
 			return
 		}
 
+		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		if _, err := w.Write(data); err != nil {
 			http.Error(w, fmt.Sprintf("partial response:%v", err), http.StatusBadRequest)
