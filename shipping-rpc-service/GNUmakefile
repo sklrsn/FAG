@@ -15,3 +15,7 @@ build:
 push:
 	docker tag shipping-rpc-engine:latest sklrsn/shipping-rpc-engine:latest
 	docker push sklrsn/shipping-rpc-engine:latest
+
+.PHONY: clean
+clean:
+	rm -rf bin/

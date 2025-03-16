@@ -15,3 +15,7 @@ build:
 push:
 	docker tag payment-rpc-engine:latest sklrsn/payment-rpc-engine:latest
 	docker push sklrsn/payment-rpc-engine:latest
+
+.PHONY: clean
+clean:
+	rm -rf bin/

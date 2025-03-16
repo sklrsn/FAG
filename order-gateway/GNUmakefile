@@ -15,3 +15,7 @@ build:
 push:
 	docker tag order-gateway:latest sklrsn/order-gateway:latest
 	docker push sklrsn/order-gateway:latest
+
+.PHONY: clean
+clean:
+	rm -rf bin/

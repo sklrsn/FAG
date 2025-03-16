@@ -1,0 +1,23 @@
+services:
+  order-gateway:
+    build: order-gateway
+    environment:
+      - ORDER_ENGINE_ADDRESS=order-rpc-service:9091
+      - PAYMENT_ENGINE_ADDRESS=payment-rpc-service:9091
+      - SHIPPING_ENGINE_ADDRESS=shipping-rpc-service:9091
+    restart: always
+    depends_on:
+      - order-rpc-service
+      - payment-rpc-service
+      - shipping-rpc-service
+  order-rpc-service:
+    build: order-rpc-service
+    restart: always
+
+  payment-rpc-service:
+    build: payment-rpc-service
+    restart: always
+
+  shipping-rpc-service:
+    build: shipping-rpc-service
+    restart: always
