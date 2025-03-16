@@ -12,6 +12,8 @@ services:
       - payment-rpc-service
       - shipping-rpc-service
       - otel-collector
+    ports:
+      - 8080:8080
   order-rpc-service:
     build: order-rpc-service
     restart: always

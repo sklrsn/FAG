@@ -53,13 +53,13 @@ func main() {
 
 		var po PurchaseOrder
 		if err := json.NewDecoder(r.Body).Decode(&po); err != nil {
-			http.Error(w, "invalid request data", http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("invalid request data:%v", err), http.StatusBadRequest)
 			return
 		}
 
 		orderID, err := sagaOrchestrator.Orchestrate(ctx, po)
 		if err != nil {
-			http.Error(w, "failed to process order", http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("failed to process order:%v", err), http.StatusBadRequest)
 			return
 		}
 
@@ -67,13 +67,13 @@ func main() {
 			OrderID: orderID,
 		})
 		if err != nil {
-			http.Error(w, "failed to marshall order data", http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("failed to marshall order data:%v", err), http.StatusBadRequest)
 			return
 		}
 
 		w.WriteHeader(http.StatusOK)
 		if _, err := w.Write(data); err != nil {
-			http.Error(w, "partial response", http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("partial response:%v", err), http.StatusBadRequest)
 			return
 		}
 	}).Methods(
