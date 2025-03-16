@@ -36,12 +36,11 @@ spec:
             - containerPort: 16686
               name: jaegar-ui
             - containerPort: 14268
-              name: jaegar-collector-http
+              name: jaegar-http
             - containerPort: 14250
-              name: jaegar-collector-grpc
+              name: jaegar-grpc
             - containerPort: 9411
               name: jaegar-zipkin
-          restartPolicy: always
       terminationGracePeriodSeconds: 30
 ---
 apiVersion: v1
@@ -62,11 +61,11 @@ spec:
       protocol: TCP
       port: 16686
       targetPort: 16686
-    - name: jaegar-collector-http
+    - name: jaegar-http
       protocol: TCP
       port: 14268
       targetPort: 14268
-    - name: jaegar-collector-grpc
+    - name: jaegar-grpc
       protocol: TCP
       port: 14250
       targetPort: 14250

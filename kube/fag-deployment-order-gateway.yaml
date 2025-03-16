@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: fag-order-gateway
-  replicas: 1
+  replicas: 2
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -70,7 +70,7 @@ spec:
                   key: OTEL_ENDPOINT
           ports:
             - containerPort: 8080
-              name: fag-order-gateway
+              name: fag-og
       restartPolicy: Always
 ---
 apiVersion: v1

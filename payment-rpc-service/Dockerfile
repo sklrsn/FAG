@@ -1,4 +1,4 @@
-FROM golang:1.24-bullseye
+FROM --platform=amd64 golang:1.24-bullseye
 
 WORKDIR /go/src/github.com/sklrsn/FAG/
 RUN go clean -cache

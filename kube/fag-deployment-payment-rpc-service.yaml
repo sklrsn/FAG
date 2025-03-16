@@ -46,7 +46,7 @@ spec:
                   key: OTEL_ENDPOINT
           ports:
             - containerPort: 9092
-              name: fag-payment-rpc-engine
+              name: fag-payment-rpc
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -63,7 +63,7 @@ spec:
     clientIP:
       timeoutSeconds: 10800
   ports:
-    - name: fag-payment-rpc-engine
+    - name: fag-payment-rpc
       protocol: TCP
       port: 9092
       targetPort: 9092

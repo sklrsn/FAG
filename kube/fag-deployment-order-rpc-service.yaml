@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: fag-order-rpc-engine
-  replicas: 1
+  replicas: 2
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -46,7 +46,7 @@ spec:
                   key: OTEL_ENDPOINT
           ports:
             - containerPort: 9091
-              name: fag-order-rpc-engine
+              name: fag-order-rpc
       restartPolicy: Always
 ---
 apiVersion: v1
