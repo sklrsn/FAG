@@ -1,5 +1,9 @@
-FROM --platform=arm64 golang:1.24-bullseye
+FROM golang:1.24-bullseye
 
-COPY ./bin/payment-rpc-engine /opt/bin/
+WORKDIR /go/src/github.com/sklrsn/FAG/
+COPY *.go .
+COPY go.mod .
+COPY go.sum .
+RUN go build -o /opt/bin/payment-rpc-engine
 
 CMD [ "/opt/bin/payment-rpc-engine" ]

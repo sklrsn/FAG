@@ -6,11 +6,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
-	otellib "github.com/sklrsn/FAG/lib/otel"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+	"go.opentelemetry.io/otel/sdk/resource"
+	"go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
 
 func init() {}
@@ -32,7 +36,7 @@ var (
 )
 
 func main() {
-	if err := otellib.SetupOTel(context.Background()); err != nil {
+	if err := SetupOTel(context.Background()); err != nil {
 		log.Fatalf("%v", err)
 	}
 
@@ -85,4 +89,33 @@ func main() {
 	})
 
 	log.Fatalf("%v", server.ListenAndServe())
+}
+
+var (
+	otelEndpoint = os.Getenv("OTEL_ENDPOINT")
+)
+
+func SetupOTel(ctx context.Context) error {
+	exporter, err := otlptracegrpc.New(ctx,
+		otlptracegrpc.WithInsecure(),
+		otlptracegrpc.WithEndpoint(otelEndpoint), //otlptracegrpc.WithEndpoint("localhost:4317")
+	)
+
+	if err != nil {
+		return fmt.Errorf("failed to create OTLP exporter: %w", err)
+	}
+	res, err := resource.New(ctx,
+		resource.WithAttributes(
+			semconv.ServiceNameKey.String("order-gateway-service"),
+		),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to create resource: %w", err)
+	}
+	tp := trace.NewTracerProvider(
+		trace.WithBatcher(exporter),
+		trace.WithResource(res),
+	)
+	otel.SetTracerProvider(tp)
+	return nil
 }

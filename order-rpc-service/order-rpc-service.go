@@ -2,13 +2,18 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
+	"os"
 
 	"github.com/google/uuid"
-	otellib "github.com/sklrsn/FAG/lib/otel"
 	"github.com/sklrsn/gRPC-defs/order"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+	"go.opentelemetry.io/otel/sdk/resource"
+	"go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 	"google.golang.org/grpc"
 )
 
@@ -59,7 +64,7 @@ func (os OrderRPCService) Release(ctx context.Context, rr *order.ReleaseRequest)
 func processReleaseRequest(ctx context.Context, rr *order.ReleaseRequest) {}
 
 func main() {
-	if err := otellib.SetupOTel(context.Background()); err != nil {
+	if err := SetupOTel(context.Background()); err != nil {
 		log.Fatalf("%v", err)
 	}
 
@@ -72,4 +77,33 @@ func main() {
 	order.RegisterOrderEngineServer(grpcServer, OrderRPCService{})
 
 	log.Fatalf("%v", grpcServer.Serve(listener))
+}
+
+var (
+	otelEndpoint = os.Getenv("OTEL_ENDPOINT")
+)
+
+func SetupOTel(ctx context.Context) error {
+	exporter, err := otlptracegrpc.New(ctx,
+		otlptracegrpc.WithInsecure(),
+		otlptracegrpc.WithEndpoint(otelEndpoint), //otlptracegrpc.WithEndpoint("localhost:4317")
+	)
+
+	if err != nil {
+		return fmt.Errorf("failed to create OTLP exporter: %w", err)
+	}
+	res, err := resource.New(ctx,
+		resource.WithAttributes(
+			semconv.ServiceNameKey.String("order-rpc-service"),
+		),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to create resource: %w", err)
+	}
+	tp := trace.NewTracerProvider(
+		trace.WithBatcher(exporter),
+		trace.WithResource(res),
+	)
+	otel.SetTracerProvider(tp)
+	return nil
 }

@@ -1,11 +1,7 @@
 .DEFAULT_GOAL:all
 
 .PHONY: all
-all: compile build push
-
-.PHONY: compile
-compile:
-	go build -o bin/order-gateway .
+all: build push
 
 .PHONY: build
 build:
@@ -15,7 +11,3 @@ build:
 push:
 	docker tag order-gateway:latest sklrsn/order-gateway:latest
 	docker push sklrsn/order-gateway:latest
-
-.PHONY: clean
-clean:
-	rm -rf bin/

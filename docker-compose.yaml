@@ -1,23 +1,62 @@
 services:
-  order-gateway:
-    build: order-gateway
-    environment:
-      - ORDER_ENGINE_ADDRESS=order-rpc-service:9091
-      - PAYMENT_ENGINE_ADDRESS=payment-rpc-service:9091
-      - SHIPPING_ENGINE_ADDRESS=shipping-rpc-service:9091
-    restart: always
-    depends_on:
-      - order-rpc-service
-      - payment-rpc-service
-      - shipping-rpc-service
+  # order-gateway:
+  #   build: order-gateway
+  #   environment:
+  #     - ORDER_ENGINE_ADDRESS=order-rpc-service:9091
+  #     - PAYMENT_ENGINE_ADDRESS=payment-rpc-service:9091
+  #     - SHIPPING_ENGINE_ADDRESS=shipping-rpc-service:9091
+  #     - OTEL_ENDPOINT="otel-collector:4317"
+  #   restart: always
+  #   depends_on:
+  #     - order-rpc-service
+  #     - payment-rpc-service
+  #     - shipping-rpc-service
+  #     - otel-collector
   order-rpc-service:
     build: order-rpc-service
     restart: always
+    environment:
+      - OTEL_ENDPOINT="otel-collector:4317"
+    depends_on:
+      - otel-collector
 
   payment-rpc-service:
     build: payment-rpc-service
     restart: always
-
+    environment:
+       - OTEL_ENDPOINT="otel-collector:4317"
+    depends_on:
+      - otel-collector
   shipping-rpc-service:
     build: shipping-rpc-service
     restart: always
+    environment:
+      - OTEL_ENDPOINT="otel-collector:4317"
+    depends_on:
+      - otel-collector
+
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    environment:
+      - "OTEL_RESOURCE_ATTRIBUTES=service.name=otel-collector"
+      - "OTEL_EXPORTER_JAEGER_ENDPOINT=jaeger:14250"
+      - "OTEL_RECEIVER_OTLP_HTTP_PORT=4318"
+      - "OTEL_RECEIVER_OTLP_GRPC_PORT=4317"
+    ports:
+      - "4317:4317"   # OTLP gRPC (for SDKs)
+      - "4318:4318"   # OTLP HTTP
+      - "55680:55680" # OpenCensus
+      - "8888:8888"   # Collector metrics
+      - "8889:8889"   # Debug port
+    depends_on:
+      - jaeger
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+    ports:
+      - "16686:16686" # Jaeger UI
+      - "14268:14268" # Jaeger collector HTTP
+      - "14250:14250" # Jaeger gRPC
+      - "9411:9411"   # Zipkin compatibility

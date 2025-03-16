@@ -1,11 +1,7 @@
 .DEFAULT_GOAL:all
 
 .PHONY: all
-all: compile build push
-
-.PHONY: compile
-compile:
-	go build -o bin/payment-rpc-engine .
+all: build push
 
 .PHONY: build
 build:
@@ -15,7 +11,3 @@ build:
 push:
 	docker tag payment-rpc-engine:latest sklrsn/payment-rpc-engine:latest
 	docker push sklrsn/payment-rpc-engine:latest
-
-.PHONY: clean
-clean:
-	rm -rf bin/

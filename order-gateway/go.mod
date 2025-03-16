@@ -1,4 +1,4 @@
-module github.com/sklrsn/FAG
+module github.com/sklrsn/FAG/order-gateway
 
 go 1.24.0
 

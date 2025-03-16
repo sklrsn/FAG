@@ -10,23 +10,9 @@ push:
 	(cd payment-rpc-service && make)
 	(cd shipping-rpc-service && make)
 
-.PHONY: compile
-compile:
-	(cd order-gateway && make compile)
-	(cd order-rpc-service && make compile)
-	(cd payment-rpc-service && make compile)
-	(cd shipping-rpc-service && make compile)
-
-.PHONY: clean
-clean:
-	(cd order-gateway && make clean)
-	(cd order-rpc-service && make clean)
-	(cd payment-rpc-service && make clean)
-	(cd shipping-rpc-service && make clean)
-
 .PHONY: up
-up: clean compile
-	docker compose -f docker-compose.yaml up
+up:
+	docker compose -f docker-compose.yaml up --build
 
 .PHONY: commit
 commit: 
