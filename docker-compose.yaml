@@ -5,7 +5,7 @@ services:
       - ORDER_ENGINE_ADDRESS=order-rpc-service:9091
       - PAYMENT_ENGINE_ADDRESS=payment-rpc-service:9092
       - SHIPPING_ENGINE_ADDRESS=shipping-rpc-service:9093
-      - OTEL_ENDPOINT="otel-collector:4317"
+      - OTEL_ENDPOINT=otel-collector:4317
     restart: always
     depends_on:
       - order-rpc-service
@@ -18,7 +18,7 @@ services:
     build: order-rpc-service
     restart: always
     environment:
-      - OTEL_ENDPOINT="otel-collector:4317"
+      - OTEL_ENDPOINT=otel-collector:4317
     depends_on:
       - otel-collector
 
@@ -26,14 +26,14 @@ services:
     build: payment-rpc-service
     restart: always
     environment:
-       - OTEL_ENDPOINT="otel-collector:4317"
+       - OTEL_ENDPOINT=otel-collector:4317
     depends_on:
       - otel-collector
   shipping-rpc-service:
     build: shipping-rpc-service
     restart: always
     environment:
-      - OTEL_ENDPOINT="otel-collector:4317"
+      - OTEL_ENDPOINT=otel-collector:4317
     depends_on:
       - otel-collector
 
