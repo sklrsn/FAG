@@ -14,9 +14,9 @@ spec:
       labels:
         app: faq-otel
     spec:
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
+      # tolerations:
+      #   - key: node-role.kubernetes.io/master
+      #     effect: NoSchedule
       containers:
         - name: faq-otel
           image: otel/opentelemetry-collector:latest

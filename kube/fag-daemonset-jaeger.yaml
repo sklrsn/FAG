@@ -14,9 +14,9 @@ spec:
       labels:
         app: fag-jagger
     spec:
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
+      # tolerations:
+      #   - key: node-role.kubernetes.io/master
+      #     effect: NoSchedule
       containers:
         - name: fag-jagger
           image: jaegertracing/all-in-one:latest
