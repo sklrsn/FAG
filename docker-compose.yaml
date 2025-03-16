@@ -18,7 +18,7 @@ services:
     build: order-rpc-service
     restart: always
     environment:
-      - OTEL_ENDPOINT=otel-collector:4317
+      - OTEL_ENDPOINT=otel-collector:4318
     depends_on:
       - otel-collector
 
@@ -26,14 +26,14 @@ services:
     build: payment-rpc-service
     restart: always
     environment:
-       - OTEL_ENDPOINT=otel-collector:4317
+       - OTEL_ENDPOINT=otel-collector:4318
     depends_on:
       - otel-collector
   shipping-rpc-service:
     build: shipping-rpc-service
     restart: always
     environment:
-      - OTEL_ENDPOINT=otel-collector:4317
+      - OTEL_ENDPOINT=otel-collector:4318
     depends_on:
       - otel-collector
 
