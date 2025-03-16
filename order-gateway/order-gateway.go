@@ -47,6 +47,10 @@ func main() {
 		panic(err)
 	}
 
+	router.HandleFunc("/order-gateway/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	}).Methods(http.MethodGet)
+
 	router.HandleFunc("/order-gateway/buy", func(w http.ResponseWriter, r *http.Request) {
 		ctx, span := tracer.Start(r.Context(), "/order-gateway/buy")
 		defer span.End()

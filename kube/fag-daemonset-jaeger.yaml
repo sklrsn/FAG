@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fag-jagger
+  namespace: fag
+  labels:
+    app: fag-jagger
+spec:
+  selector:
+    matchLabels:
+      app: fag-jagger
+  template:
+    metadata:
+      labels:
+        app: fag-jagger
+    spec:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      containers:
+        - name: fag-jagger
+          image: jaegertracing/all-in-one:latest
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          env:
+            - name: COLLECTOR_ZIPKIN_HTTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config
+                  key: COLLECTOR_ZIPKIN_HTTP_PORT
+          ports:
+            - containerPort: 16686
+              name: jaegar-ui
+            - containerPort: 14268
+              name: jaegar-collector-http
+            - containerPort: 14250
+              name: jaegar-collector-grpc
+            - containerPort: 9411
+              name: jaegar-zipkin
+          restartPolicy: always
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fag-jagger
+  namespace: fag
+spec:
+  selector:
+    app: fag-jagger
+  type: ClusterIP
+  sessionAffinity: None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  ports:
+    - name: jaegar-ui
+      protocol: TCP
+      port: 16686
+      targetPort: 16686
+    - name: jaegar-collector-http
+      protocol: TCP
+      port: 14268
+      targetPort: 14268
+    - name: jaegar-collector-grpc
+      protocol: TCP
+      port: 14250
+      targetPort: 14250
+    - name: jaegar-zipkin
+      protocol: TCP
+      port: 9411
+      targetPort: 9411

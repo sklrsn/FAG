@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fag-shipping-rpc-engine
+  namespace: fag
+  labels:
+    app: fag-shipping-rpc-engine
+spec:
+  selector:
+    matchLabels:
+      app: fag-shipping-rpc-engine
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: fag-shipping-rpc-engine
+    spec:
+      containers:
+        - name: fag-shipping-rpc-engine
+          image: sklrsn/shipping-rpc-engine:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          livenessProbe:
+            tcpSocket:
+              port: 9093
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 10
+          env:
+            - name: OTEL_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config
+                  key: OTEL_ENDPOINT
+          ports:
+            - containerPort: 9093
+              name: fag-shipping-rpc-engine
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fag-shipping-rpc-engine
+  namespace: fag
+spec:
+  selector:
+    app: fag-shipping-rpc-engine
+  type: ClusterIP
+  sessionAffinity: None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  ports:
+    - name: fag-shipping-rpc-engine
+      protocol: TCP
+      port: 9093
+      targetPort: 9093
