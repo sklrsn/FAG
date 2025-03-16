@@ -4,21 +4,21 @@ metadata:
   name: fag-otel
   namespace: fag
   labels:
-    app: faq-otel
+    app: fag-otel
 spec:
   selector:
     matchLabels:
-      app: faq-otel
+      app: fag-otel
   template:
     metadata:
       labels:
-        app: faq-otel
+        app: fag-otel
     spec:
       # tolerations:
       #   - key: node-role.kubernetes.io/master
       #     effect: NoSchedule
       containers:
-        - name: faq-otel
+        - name: fag-otel
           image: otel/opentelemetry-collector:latest
           resources:
             limits:
@@ -64,11 +64,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: faq-otel
+  name: fag-otel
   namespace: fag
 spec:
   selector:
-    app: faq-otel
+    app: fag-otel
   type: ClusterIP
   sessionAffinity: None
   sessionAffinityConfig:

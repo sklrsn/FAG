@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: fag-jagger
+  name: fag-jaeger
   namespace: fag
   labels:
-    app: fag-jagger
+    app: fag-jaeger
 spec:
   selector:
     matchLabels:
-      app: fag-jagger
+      app: fag-jaeger
   template:
     metadata:
       labels:
-        app: fag-jagger
+        app: fag-jaeger
     spec:
       # tolerations:
       #   - key: node-role.kubernetes.io/master
       #     effect: NoSchedule
       containers:
-        - name: fag-jagger
+        - name: fag-jaeger
           image: jaegertracing/all-in-one:latest
           resources:
             limits:
@@ -46,11 +46,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fag-jagger
+  name: fag-jaeger
   namespace: fag
 spec:
   selector:
-    app: fag-jagger
+    app: fag-jaeger
   type: ClusterIP
   sessionAffinity: None
   sessionAffinityConfig:
