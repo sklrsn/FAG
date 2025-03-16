@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
-	github.com/sklrsn/gRPC-defs v0.0.0-20250311194515-5534bcc5cafd
+	github.com/sklrsn/gRPC-defs v0.0.0-20250316092712-02bebd5c1c70
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.60.0
 	go.opentelemetry.io/otel v1.35.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.35.0

@@ -1,17 +1,17 @@
 services:
-  # order-gateway:
-  #   build: order-gateway
-  #   environment:
-  #     - ORDER_ENGINE_ADDRESS=order-rpc-service:9091
-  #     - PAYMENT_ENGINE_ADDRESS=payment-rpc-service:9091
-  #     - SHIPPING_ENGINE_ADDRESS=shipping-rpc-service:9091
-  #     - OTEL_ENDPOINT="otel-collector:4317"
-  #   restart: always
-  #   depends_on:
-  #     - order-rpc-service
-  #     - payment-rpc-service
-  #     - shipping-rpc-service
-  #     - otel-collector
+  order-gateway:
+    build: order-gateway
+    environment:
+      - ORDER_ENGINE_ADDRESS=order-rpc-service:9091
+      - PAYMENT_ENGINE_ADDRESS=payment-rpc-service:9091
+      - SHIPPING_ENGINE_ADDRESS=shipping-rpc-service:9091
+      - OTEL_ENDPOINT="otel-collector:4317"
+    restart: always
+    depends_on:
+      - order-rpc-service
+      - payment-rpc-service
+      - shipping-rpc-service
+      - otel-collector
   order-rpc-service:
     build: order-rpc-service
     restart: always

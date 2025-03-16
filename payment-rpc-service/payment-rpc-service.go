@@ -62,17 +62,17 @@ func (ps PaymentRPCService) Capture(ctx context.Context, cr *payment.CaptureRequ
 }
 func processCaptureRequest(ctx context.Context, pa *payment.CaptureRequest) {} // do nothing
 
-func (ps PaymentRPCService) Release(ctx context.Context, rr *payment.ReleaseRequest) (*payment.ReleaseResponse, error) {
+func (ps PaymentRPCService) Release(ctx context.Context, rr *payment.ReimburseRequest) (*payment.ReimburseResponse, error) {
 	ctx, span := tracer.Start(ctx, "Release")
 	defer span.End()
 
 	processReleaseRequest(ctx, rr) // do nothing
 
-	return &payment.ReleaseResponse{
+	return &payment.ReimburseResponse{
 		Status: SUCCESS.String(),
 	}, nil
 }
-func processReleaseRequest(ctx context.Context, rr *payment.ReleaseRequest) {} // do nothing
+func processReleaseRequest(ctx context.Context, rr *payment.ReimburseRequest) {} // do nothing
 
 func main() {
 	if err := SetupOTel(context.Background()); err != nil {

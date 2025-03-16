@@ -10,6 +10,7 @@ import (
 	"github.com/sklrsn/gRPC-defs/payment"
 	"github.com/sklrsn/gRPC-defs/shipping"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type SagaOrchestrator struct {
@@ -25,19 +26,19 @@ var (
 )
 
 func (so *SagaOrchestrator) Init() error {
-	oeCl, err := grpc.NewClient(orderEngineUrl)
+	oeCl, err := grpc.NewClient(orderEngineUrl, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return err
 	}
 	so.orderClient = order.NewOrderEngineClient(oeCl)
 
-	payCl, err := grpc.NewClient(paymentEngineUrl)
+	payCl, err := grpc.NewClient(paymentEngineUrl, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return err
 	}
 	so.paymentClient = payment.NewPaymentClient(payCl)
 
-	shipCl, err := grpc.NewClient(shippingEngineUrl)
+	shipCl, err := grpc.NewClient(shippingEngineUrl, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return err
 	}
