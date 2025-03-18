@@ -18,3 +18,9 @@ up:
 commit: 
 	git add .
 	git commit -am "more fixes"
+
+traefik-tls-secret:
+	kubectl create secret tls traefik-tls-secret --cert=certs/traefik.crt --key=certs/traefik.key -n fag
+
+nginx-tls-secret:
+	kubectl create secret tls nginx-tls-secret --cert=certs/nginx.crt --key=certs/nginx.key -n fag
