@@ -1,0 +1,10 @@
+resources:
+  - fag-configmap-environment.yaml
+  - fag-deployment-order-gateway.yaml
+  - fag-deployment-shipping-rpc-service.yaml
+  - fag-daemonset-jaeger.yaml
+  - fag-deployment-order-rpc-service.yaml
+  - fag-ingress-nginx.yaml
+  - fag-daemonset-otel.yaml
+  - fag-deployment-payment-rpc-service.yaml
+  - fag-namespace.yaml

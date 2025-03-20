@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fag-order-gateway
+  namespace: fag
+  labels:
+    app: fag-order-gateway
+spec:
+  replicas: 1

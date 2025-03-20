@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fag-order-gateway
+  namespace: fag
+  labels:
+    app: fag-order-gateway
+spec:
+  selector:
+    matchLabels:
+      app: fag-order-gateway
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: fag-order-gateway
+    spec:
+      containers:
+        - name: fag-order-gateway
+          image: sklrsn/order-gateway:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /order-gateway/health
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 10
+          env:
+            - name: ORDER_ENGINE_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config
+                  key: ORDER_ENGINE_ADDRESS
+            - name: PAYMENT_ENGINE_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config
+                  key: PAYMENT_ENGINE_ADDRESS
+            - name: SHIPPING_ENGINE_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config
+                  key: SHIPPING_ENGINE_ADDRESS
+            - name: OTEL_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config
+                  key: OTEL_ENDPOINT
+          ports:
+            - containerPort: 8080
+              name: fag-og
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fag-order-gateway
+  namespace: fag
+spec:
+  selector:
+    app: fag-order-gateway
+  type: ClusterIP
+  sessionAffinity: None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  ports:
+    - name: fag-order-gateway
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
