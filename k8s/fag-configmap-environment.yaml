@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: fag-config
-  namespace: fag
+  #namespace: fag
 data:
   ORDER_ENGINE_ADDRESS: "fag-order-rpc-engine.fag.svc.cluster.local:9091"
   PAYMENT_ENGINE_ADDRESS: "fag-payment-rpc-engine.fag.svc.cluster.local:9092"

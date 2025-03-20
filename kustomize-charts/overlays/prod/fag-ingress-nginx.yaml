@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: www.sklrsn.in
+    - host: www.prod.sklrsn.in
       http:
         paths:
           - pathType: Prefix
@@ -18,5 +18,5 @@ spec:
             path: /order-gateway
   tls:
     - hosts:
-        - www.sklrsn.in
+        - www.prod.sklrsn.in
       secretName: nginx-tls-secret

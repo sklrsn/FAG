@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx-ingress
-  namespace: fag
+  #namespace: fag
 spec:
   ingressClassName: nginx
   rules:

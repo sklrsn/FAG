@@ -9,3 +9,7 @@ patches:
       kind: Deployment
       name: fag-order-gateway
     path: fag-deployments-order-gateway.yaml
+  - target:
+      kind: Ingress
+      name: nginx-ingress
+    path: fag-ingress-nginx.yaml
