@@ -19,5 +19,10 @@ commit:
 	git add .
 	git commit -am "more fixes"
 
-nginx-tls-secret:
+nginx-generate-cert:
+	@rm -f certs/nginx.crt
+	@rm -f certs/nginx.key
+	openssl req -x509 -newkey rsa:4096 -keyout certs/nginx.key -out certs/nginx.crt -days 365 \
+	-nodes -subj "/CN=www.sklrsn.in" -addext "subjectAltName=DNS:sklrsn.in,DNS:www.sklrsn.in"
+nginx-tls-secret: nginx-generate-cert
 	kubectl create secret tls nginx-tls-secret --cert=certs/nginx.crt --key=certs/nginx.key -n fag
