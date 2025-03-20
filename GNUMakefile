@@ -25,5 +25,5 @@ nginx-generate-cert:
 	openssl req -x509 -newkey rsa:4096 -keyout certs/nginx.key -out certs/nginx.crt -days 365 \
 	-nodes -subj "/CN=www.sklrsn.in" -addext "subjectAltName=DNS:sklrsn.in,DNS:www.sklrsn.in"
 nginx-tls-secret: nginx-generate-cert
-	kubectl create namespace fag
+	kubectl create namespace fag || exit 0
 	kubectl create secret tls nginx-tls-secret --cert=certs/nginx.crt --key=certs/nginx.key -n fag
