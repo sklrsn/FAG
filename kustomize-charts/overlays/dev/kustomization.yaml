@@ -1,5 +1,5 @@
 bases:
-  - ../../base
+- ../../base
 
-patches:
-  - fag-deployments-order-gateway.yaml
+patchesStrategicMerge:
+ - fag-deployments-order-gateway.yaml
