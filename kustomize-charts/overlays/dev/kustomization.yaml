@@ -13,3 +13,7 @@ patches:
       kind: Ingress
       name: nginx-ingress
     path: fag-ingress-nginx.yaml
+  - target:
+      kind: ConfigMap
+      name: fag-config
+    path: fag-configmap-environment.yaml
