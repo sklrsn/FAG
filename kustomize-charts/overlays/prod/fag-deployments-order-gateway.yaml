@@ -3,5 +3,14 @@ kind: Deployment
 metadata:
   name: fag-order-gateway
   namespace: fag
+  labels:
+    app: fag-order-gateway
 spec:
-  replicas: 3
+  selector:
+    matchLabels:
+      app: fag-order-gateway
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: fag-order-gateway
