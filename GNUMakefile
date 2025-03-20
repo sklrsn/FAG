@@ -18,6 +18,7 @@ up:
 commit: 
 	git add .
 	git commit -am "more fixes"
+	git push
 
 nginx-generate-cert:
 	@rm -f certs/nginx.crt
