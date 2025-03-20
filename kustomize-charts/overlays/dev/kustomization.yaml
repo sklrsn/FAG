@@ -1,5 +1,11 @@
-bases:
-- ../../base
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 
-patchesStrategicMerge:
- - fag-deployments-order-gateway.yaml
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: fag-order-gateway
+    path: fag-deployments-order-gateway.yaml
