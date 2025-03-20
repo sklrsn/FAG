@@ -4,4 +4,4 @@ metadata:
   name: fag-order-gateway
   namespace: fag
 spec:
-  replicas: 1
+  replicas: 3
