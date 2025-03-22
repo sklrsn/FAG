@@ -1,0 +1,6 @@
+namespace: dev
+
+ingress:
+  hostname: "www.sklrsn.in"
+  tls.crt:
+  tls.key:
