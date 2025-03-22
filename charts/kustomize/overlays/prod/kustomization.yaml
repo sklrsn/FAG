@@ -17,3 +17,11 @@ patches:
       kind: ConfigMap
       name: fag-config
     path: fag-configmap-environment.yaml
+  - target:
+      kind: Secret
+      name: tls-secret-nginx
+    path: fag-secrets.yaml
+  - target:
+      kind: Role
+      name: fag-role
+    path: fag-role.yaml
