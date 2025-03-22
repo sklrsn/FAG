@@ -1,0 +1,8 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: fag-cluster-role
+rules:
+  - apiGroups: ["*"] # All API groups ("" includes core APIs)
+    resources: ["*"] # All resources (pods, services, nodes, secrets, etc.)
+    verbs: ["*"] # All actions (get, list, watch, create, update, delete, etc.)

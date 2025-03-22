@@ -22,6 +22,6 @@ patches:
       name: tls-secret-nginx
     path: fag-secrets.yaml
   - target:
-      kind: ServiceAccount
-      name: fag-sa
-    path: fag-sa.yaml
+      kind: ClusterRole
+      name: fag-cluster-role
+    path: fag-cluster-role.yaml
