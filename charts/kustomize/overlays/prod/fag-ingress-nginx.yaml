@@ -18,4 +18,4 @@ spec:
   tls:
     - hosts:
         - www.prod.sklrsn.in
-      secretName: nginx-tls-secret
+      secretName: tls-secret-nginx
