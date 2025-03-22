@@ -17,7 +17,7 @@ up:
 .PHONY: commit
 commit: 
 	git add .
-	git commit -am "fixes from date:$$(`date`)"
+	git commit -am "fixes from date:$(shell date)"
 	git push
 
 generate-cert: clean
