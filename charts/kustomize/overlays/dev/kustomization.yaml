@@ -21,3 +21,7 @@ patches:
       kind: Secret
       name: tls-secret-nginx
     path: fag-secrets.yaml
+  - target:
+      kind: ServiceAccount
+      name: fag-sa
+    path: fag-sa.yaml

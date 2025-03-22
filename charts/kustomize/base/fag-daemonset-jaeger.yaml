@@ -13,6 +13,7 @@ spec:
       labels:
         app: fag-jaeger
     spec:
+      serviceAccountName: fag-sa
       # tolerations:
       #   - key: node-role.kubernetes.io/master
       #     effect: NoSchedule

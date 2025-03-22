@@ -19,6 +19,7 @@ spec:
       labels:
         app: fag-shipping-rpc-engine
     spec:
+      serviceAccountName: fag-sa
       containers:
         - name: fag-shipping-rpc-engine
           image: sklrsn/shipping-rpc-engine:latest

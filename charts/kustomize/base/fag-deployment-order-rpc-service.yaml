@@ -19,6 +19,7 @@ spec:
       labels:
         app: fag-order-rpc-engine
     spec:
+      serviceAccountName: fag-sa
       containers:
         - name: fag-order-rpc-engine
           image: sklrsn/order-rpc-engine:latest

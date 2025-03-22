@@ -8,3 +8,4 @@ resources:
   - fag-daemonset-otel.yaml
   - fag-deployment-payment-rpc-service.yaml
   - fag-secrets.yaml
+  - fag-sa.yaml

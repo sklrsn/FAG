@@ -19,6 +19,7 @@ spec:
       labels:
         app: fag-order-gateway
     spec:
+      serviceAccountName: fag-sa
       containers:
         - name: fag-order-gateway
           image: sklrsn/order-gateway:latest
