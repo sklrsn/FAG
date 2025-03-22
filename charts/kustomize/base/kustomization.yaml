@@ -7,4 +7,4 @@ resources:
   - fag-ingress-nginx.yaml
   - fag-daemonset-otel.yaml
   - fag-deployment-payment-rpc-service.yaml
-  - fag-namespace.yaml
+  - fag-secrets.yaml

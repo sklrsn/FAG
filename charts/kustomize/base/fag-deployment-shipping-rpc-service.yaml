@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fag-shipping-rpc-engine
-  #namespace: fag
   labels:
     app: fag-shipping-rpc-engine
 spec:
@@ -53,7 +52,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fag-shipping-rpc-engine
-  #namespace: fag
 spec:
   selector:
     app: fag-shipping-rpc-engine

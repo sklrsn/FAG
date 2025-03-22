@@ -20,15 +20,10 @@ commit:
 	git commit -am "more fixes"
 	git push
 
-nginx-generate-cert:
-	@rm -f certs/nginx.crt
-	@rm -f certs/nginx.key
-	openssl req -x509 -newkey rsa:4096 -keyout certs/nginx.key -out certs/nginx.crt -days 365 \
+generate-cert: clean
+	mkdir -p ./certs
+	openssl req -x509 -newkey rsa:4096 -keyout certs/nginx.key -out certs/nginx.crt -days 30 \
 	-nodes -subj "/CN=www.dev.sklrsn.in" -addext "subjectAltName=DNS:dev.sklrsn.in,DNS:www.dev.sklrsn.in"
-nginx-tls-secret-dev: nginx-generate-cert
-	kubectl create namespace dev || exit 0
-	kubectl create secret tls nginx-tls-secret --cert=certs/nginx.crt --key=certs/nginx.key -n dev
 
-nginx-tls-secret-prod: nginx-generate-cert
-	kubectl create namespace prod || exit 0
-	kubectl create secret tls nginx-tls-secret --cert=certs/nginx.crt --key=certs/nginx.key -n prod
+clean:
+	@rm -rf ./certs
