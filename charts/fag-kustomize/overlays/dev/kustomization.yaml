@@ -11,7 +11,7 @@ patches:
     path: fag-deployments-order-gateway.yaml
   - target:
       kind: Ingress
-      name: nginx-ingress
+      name: nginx-ingress-fag-order-gateway
     path: fag-ingress-order-gateway.yaml
   - target:
       kind: ConfigMap
