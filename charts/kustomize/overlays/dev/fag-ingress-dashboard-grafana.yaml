@@ -1,8 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-dashboards
+  name: ingress-dashboards-grafana
   annotations:
+    namespace: loki
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
@@ -17,16 +18,6 @@ spec:
                 port:
                   number: 3000
             path: /grafana
-    - host: www.dev.sklrsn.in
-      http:
-        paths:
-          - pathType: Prefix
-            backend:
-              service:
-                name: fag-jaeger
-                port:
-                  number: 16686
-            path: /jaegar
   tls:
     - hosts:
         - www.dev.sklrsn.in
