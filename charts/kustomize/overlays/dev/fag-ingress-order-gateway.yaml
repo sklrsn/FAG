@@ -3,6 +3,11 @@ kind: Ingress
 metadata:
   name: nginx-ingress
 spec:
+  defaultBackend:
+    service:
+      name: fag-jaeger
+      port:
+        number: 16686
   ingressClassName: nginx
   rules:
     - host: www.dev.sklrsn.in
@@ -15,7 +20,7 @@ spec:
                 port:
                   number: 8080
             path: /order-gateway
-         
+
           - pathType: Prefix
             backend:
               service:
