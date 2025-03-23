@@ -24,7 +24,7 @@ spec:
               service:
                 name: fag-jaeger
                 port:
-                  number: 80
+                  number: 16686
             path: /
 
     - host: www.grafana.sklrsn.in
