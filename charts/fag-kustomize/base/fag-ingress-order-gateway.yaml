@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: nginx-ingress-fag-order-gateway
 spec:
   ingressClassName: nginx
   rules:
-    - host: www.dev.sklrsn.in
+    - host: www.sklrsn.in
       http:
         paths:
           - pathType: Prefix
@@ -17,5 +17,5 @@ spec:
             path: /order-gateway
   tls:
     - hosts:
-        - www.dev.sklrsn.in
-      secretName: nginx-tls-secret
+        - www.sklrsn.in
+      secretName: tls-secret-nginx

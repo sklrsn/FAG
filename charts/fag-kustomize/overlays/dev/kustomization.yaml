@@ -11,16 +11,20 @@ patches:
     path: fag-deployments-order-gateway.yaml
   - target:
       kind: Ingress
-      name: nginx-ingress
-    path: fag-ingress-nginx.yaml
+      name: nginx-ingress-fag-order-gateway
+    path: fag-ingress-order-gateway.yaml
   - target:
       kind: ConfigMap
       name: fag-config
     path: fag-configmap-environment.yaml
   - target:
       kind: Secret
-      name: tls-secret-nginx
-    path: fag-secrets.yaml
+      name: tls-secret-nginx-jaegar
+    path: fag-secrets-jaegar.yaml
+  - target:
+      kind: Secret
+      name: tls-secret-nginx-order-gateway
+    path: fag-secrets-order-gateway.yaml
   - target:
       kind: Role
       name: fag-role
