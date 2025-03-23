@@ -25,11 +25,3 @@ patches:
       kind: Role
       name: fag-role
     path: fag-role.yaml
-  - target:
-      kind: Ingress
-      name: ingress-dashboards-jaegar
-    path: fag-ingress-dashboard-jaegar.yaml
-  - target:
-      kind: Ingress
-      name: ingress-dashboards-grafana
-    path: fag-ingress-dashboard-grafana.yaml
