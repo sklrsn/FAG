@@ -27,7 +27,7 @@ spec:
                 name: fag-jaeger
                 port:
                   number: 16686
-            path: /search
+            path: /
   tls:
     - hosts:
         - www.dev.sklrsn.in
