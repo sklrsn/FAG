@@ -19,7 +19,7 @@ spec:
           - pathType: Prefix
             backend:
               service:
-                name: loki-grafana
+                name: loki-grafana.loki.svc.cluster.local
                 port:
                   number: 80
             path: /grafana
