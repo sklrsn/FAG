@@ -19,8 +19,16 @@ patches:
     path: fag-configmap-environment.yaml
   - target:
       kind: Secret
-      name: tls-secret-nginx
-    path: fag-secrets.yaml
+      name: tls-secret-nginx-grafana
+    path: fag-secrets-grafana.yaml
+  - target:
+      kind: Secret
+      name: tls-secret-nginx-jaegar
+    path: fag-secrets-jaegar.yaml
+  - target:
+      kind: Secret
+      name: tls-secret-nginx-order-gateway
+    path: fag-secrets-order-gateway.yaml
   - target:
       kind: Role
       name: fag-role
