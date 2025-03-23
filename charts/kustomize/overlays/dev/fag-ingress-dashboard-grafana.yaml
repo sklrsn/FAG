@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: ingress-dashboards-grafana
   annotations:
-    namespace: loki
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
@@ -16,7 +15,7 @@ spec:
               service:
                 name: loki-grafana
                 port:
-                  number: 3000
+                  number: 80
             path: /grafana
   tls:
     - hosts:
