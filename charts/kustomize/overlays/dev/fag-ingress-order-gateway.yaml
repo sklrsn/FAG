@@ -15,14 +15,6 @@ spec:
                 port:
                   number: 8080
             path: /order-gateway
-
-          - pathType: Prefix
-            backend:
-              service:
-                name: fag-jaeger
-                port:
-                  number: 16686
-            path: /
   tls:
     - hosts:
         - www.dev.sklrsn.in
