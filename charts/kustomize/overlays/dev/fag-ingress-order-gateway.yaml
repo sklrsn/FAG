@@ -15,14 +15,6 @@ spec:
                 port:
                   number: 8080
             path: /order-gateway
-
-          - pathType: Prefix
-            backend:
-              service:
-                name: loki-grafana.loki.svc.cluster.local
-                port:
-                  number: 80
-            path: /grafana
   tls:
     - hosts:
         - www.dev.sklrsn.in
