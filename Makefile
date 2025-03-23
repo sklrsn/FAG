@@ -23,7 +23,7 @@ commit:
 generate-cert: clean
 	mkdir -p ./certs
 	openssl req -x509 -newkey rsa:4096 -keyout certs/nginx.key -out certs/nginx.crt -days 30 \
-	-nodes -subj "/CN=www.jaegar.sklrsn.in" -addext "subjectAltName=DNS:jaegar.sklrsn.in,DNS:www.jaegar.sklrsn.in"
+	-nodes -subj "/CN=www.dev.sklrsn.in" -addext "subjectAltName=DNS:dev.sklrsn.in,DNS:www.dev.sklrsn.in"
 
 clean:
 	@rm -rf ./certs
