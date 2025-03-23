@@ -25,3 +25,7 @@ patches:
       kind: Role
       name: fag-role
     path: fag-role.yaml
+  - target:
+      kind: Ingress
+      name: ingress-dashboards
+    path: fag-ingress-dashboards.yaml
