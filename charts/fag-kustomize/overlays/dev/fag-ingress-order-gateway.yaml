@@ -26,17 +26,6 @@ spec:
                 port:
                   number: 16686
             path: /
-
-    - host: www.grafana.sklrsn.in
-      http:
-        paths:
-          - pathType: Prefix
-            backend:
-              service:
-                name: loki-grafana
-                port:
-                  number: 80
-            path: /
   tls:
     - hosts:
         - www.dev.sklrsn.in
@@ -44,6 +33,3 @@ spec:
     - hosts:
         - www.jaegar.sklrsn.in
       secretName: tls-secret-nginx-jaegar
-    - hosts:
-        - www.grafana.sklrsn.in
-      secretName: tls-secret-nginx-grafana
