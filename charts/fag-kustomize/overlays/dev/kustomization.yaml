@@ -14,10 +14,6 @@ patches:
       name: nginx-ingress
     path: fag-ingress-order-gateway.yaml
   - target:
-      kind: Ingress
-      name: nginx-ingress-loki-grafana
-    path: fag-ingress-grafana.yaml
-  - target:
       kind: ConfigMap
       name: fag-config
     path: fag-configmap-environment.yaml
