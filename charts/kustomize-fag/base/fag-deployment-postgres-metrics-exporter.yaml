@@ -31,7 +31,7 @@ spec:
               memory: 100Mi
           ports:
             - containerPort: 9187
-              name: postgres-metrics
+              name: metrics-port
           env:
             - name: POSTGRES_USER
               valueFrom:
