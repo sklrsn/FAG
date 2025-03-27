@@ -1,25 +1,34 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: fag-database-postgres
+  name: fag-postgres-metrics-exporter
+  labels:
+    app: fag-postgres-metrics-exporter
 spec:
   selector:
     matchLabels:
-      app: fag-database-postgres
-  serviceName: "fag-database-postgres"
+      app: fag-postgres-metrics-exporter
   replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app: fag-database-postgres
+        app: fag-postgres-metrics-exporter
     spec:
-      terminationGracePeriodSeconds: 10
       containers:
-        - name: postgres
-          image: postgres:17
-          ports:
-            - containerPort: 5432
-              name: db
+        - name: fag-postgres-metrics-exporter
+          image: quay.io/prometheuscommunity/postgres-exporter
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -41,19 +50,6 @@ spec:
                 secretKeyRef:
                   name: fag-secrets-database
                   key: POSTGRES_PASSWORD
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: fag-database-postgres
-spec:
-  selector:
-    app: fag-database-postgres
-  type: ClusterIP
-  sessionAffinity: None
-  clusterIP: None
-  ports:
-    - name: fag-database-postgres
-      protocol: TCP
-      port: 5432
-      targetPort: 5432
+            - name: DATA_SOURCE_URI
+              value: "fag-database-postgres:5432/$(POSTGRES_DB)?sslmode=disable"
+      restartPolicy: Always
