@@ -10,4 +10,4 @@ spec:
       app: fag-postgres-metrics-exporter
   endpoints:
     - port: "9187"
-      interval: 10s
+      interval: 5s
