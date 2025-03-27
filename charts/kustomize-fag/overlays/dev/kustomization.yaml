@@ -35,5 +35,5 @@ patches:
     path: fag-statefulset-postgres.yaml
   - target:
       kind: Secret
-      name: fag-secrets-database
+      name: fag-secrets-postgres
     path: fag-secrets-postgres.yaml

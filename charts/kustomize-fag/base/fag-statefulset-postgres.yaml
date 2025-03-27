@@ -39,7 +39,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: fag-secrets-database
+                  name: fag-secrets-postgres
                   key: POSTGRES_PASSWORD
 ---
 apiVersion: v1
