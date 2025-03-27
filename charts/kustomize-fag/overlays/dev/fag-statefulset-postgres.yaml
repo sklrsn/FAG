@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: fag-database-postgres
   serviceName: "fag-database-postgres"
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
