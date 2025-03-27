@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: fag-database-postgres
+spec:
+  selector:
+    matchLabels:
+      app: fag-database-postgres
+  serviceName: "fag-database-postgres"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fag-database-postgres
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: postgres
+          image: postgres:17
+          ports:
+            - containerPort: 5432
+              name: db
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fag-secrets-database
+                  key: POSTGRES_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fag-database-postgres
+spec:
+  selector:
+    app: fag-database-postgres
+  type: ClusterIP
+  sessionAffinity: None
+  clusterIP: None
+  ports:
+    - name: fag-database-postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432

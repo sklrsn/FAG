@@ -9,3 +9,5 @@ resources:
   - fag-secrets.yaml
   - fag-sa.yaml
   - fag-ingress-order-gateway.yaml
+  - fag-deployment-postgres.yaml
+  - fag-secrets-postgres.yaml
