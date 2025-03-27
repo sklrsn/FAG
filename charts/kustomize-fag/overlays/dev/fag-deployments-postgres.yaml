@@ -1,12 +1,11 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: fag-database-postgres
 spec:
   selector:
     matchLabels:
       app: fag-database-postgres
-  serviceName: "fag-database-postgres"
   replicas: 1
   template:
     metadata:

@@ -30,9 +30,9 @@ patches:
       name: fag-role
     path: fag-role.yaml
   - target:
-      kind: StatefulSet
+      kind: Deployment
       name: fag-database-postgres
-    path: fag-statefulset-postgres.yaml
+    path: fag-deployments-postgres.yaml
   - target:
       kind: Secret
       name: fag-secrets-postgres
