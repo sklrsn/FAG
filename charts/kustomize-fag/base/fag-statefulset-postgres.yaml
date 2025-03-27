@@ -51,7 +51,7 @@ spec:
     app: fag-database-postgres
   type: ClusterIP
   sessionAffinity: None
-  clusterIP: None
+  #clusterIP: None
   ports:
     - name: fag-database-postgres
       protocol: TCP
