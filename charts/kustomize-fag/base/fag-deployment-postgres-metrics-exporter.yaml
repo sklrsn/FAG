@@ -66,7 +66,7 @@ spec:
     app: fag-postgres-metrics-exporter
   type: ClusterIP
   ports:
-    - name: MYAPP
+    - name: fag-postgres-metrics
       protocol: TCP
       port: 9187
       targetPort: 9187

@@ -8,7 +8,7 @@ patches:
   - target:
       kind: Deployment
       name: fag-order-gateway
-    path: fag-deployments-order-gateway.yaml
+    path: fag-deployment-order-gateway.yaml
   - target:
       kind: Ingress
       name: nginx-ingress-fag-order-gateway
@@ -32,7 +32,7 @@ patches:
   - target:
       kind: Deployment
       name: fag-database-postgres
-    path: fag-deployments-postgres.yaml
+    path: fag-deployment-postgres.yaml
   - target:
       kind: Secret
       name: fag-secrets-postgres
