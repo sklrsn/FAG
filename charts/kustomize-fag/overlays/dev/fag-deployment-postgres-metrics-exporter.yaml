@@ -32,6 +32,8 @@ spec:
           ports:
             - containerPort: 9187
               name: metrics-port
+          args:
+            - "--log.level=debug"
           env:
             - name: POSTGRES_USER
               valueFrom:
