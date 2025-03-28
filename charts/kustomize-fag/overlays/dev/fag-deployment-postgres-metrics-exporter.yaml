@@ -29,25 +29,7 @@ spec:
             limits:
               cpu: 100m
               memory: 100Mi
-          ports:
-            - containerPort: 9187
-              name: metrics-port
           env:
-            - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: fag-config-postgres
-                  key: POSTGRES_USER
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: fag-config-postgres
-                  key: POSTGRES_DB
-            - name: POSTGRES_HOST_AUTH_METHOD
-              valueFrom:
-                configMapKeyRef:
-                  name: fag-config-postgres
-                  key: POSTGRES_HOST_AUTH_METHOD
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -61,17 +43,3 @@ spec:
             - name: DATA_SOURCE_URI
               value: $(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable
       restartPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: fag-postgres-metrics-exporter
-spec:
-  selector:
-    app: fag-postgres-metrics-exporter
-  type: ClusterIP
-  ports:
-    - name: postgres-metrics
-      protocol: TCP
-      port: 9187
-      targetPort: 9187
