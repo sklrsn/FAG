@@ -41,3 +41,7 @@ patches:
       kind: Deployment
       name: fag-postgres-metrics-exporter
     path: fag-deployment-postgres-metrics-exporter.yaml
+  - target:
+      kind: ConfigMap
+      name: fag-config-postgres
+    path: fag-configmap-postgres.yaml
