@@ -70,6 +70,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fag-postgres-metrics-exporter
+  labels:
+    app: fag-postgres-metrics-exporter
 spec:
   selector:
     app: fag-postgres-metrics-exporter
