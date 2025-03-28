@@ -62,7 +62,7 @@ spec:
                   key: POSTGRES_ADDRESS
             # - name: DATA_SOURCE_URI
             #   value: $(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable
-            - name: DATA_SOURCE_URI
+            - name: DATA_SOURCE_NAME
               value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable"
             # - name: DATA_SOURCE_NAME
             #   value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable"
