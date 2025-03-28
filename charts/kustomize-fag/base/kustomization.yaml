@@ -13,3 +13,4 @@ resources:
   - fag-secrets-postgres.yaml
   - fag-configmap-postgres.yaml
   - fag-deployment-postgres-metrics-exporter.yaml
+  - fag-servicemonitor-prometheus.yaml
