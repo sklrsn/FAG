@@ -9,5 +9,5 @@ spec:
     matchLabels:
       app: fag-postgres-metrics-exporter
   endpoints:
-    - port: "9187"
+    - port: "postgres-metrics"
       interval: 5s
