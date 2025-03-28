@@ -38,13 +38,19 @@ spec:
                 configMapKeyRef:
                   name: fag-config-postgres
                   key: POSTGRES_USER
-                  
+
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
                   name: fag-config-postgres
                   key: POSTGRES_DB
 
+            - name: POSTGRES_HOST_AUTH_METHOD
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config-postgres
+                  key: POSTGRES_HOST_AUTH_METHOD
+                  
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
