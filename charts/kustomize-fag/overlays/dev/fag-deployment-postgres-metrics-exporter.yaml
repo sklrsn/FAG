@@ -35,35 +35,30 @@ spec:
           args:
             - "--log.level=debug"
           env:
-            - name: POSTGRES_USER
+            - name: DATA_SOURCE_USER
               valueFrom:
                 configMapKeyRef:
                   name: fag-config-postgres
                   key: POSTGRES_USER
+
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
                   name: fag-config-postgres
                   key: POSTGRES_DB
-            - name: POSTGRES_HOST_AUTH_METHOD
-              valueFrom:
-                configMapKeyRef:
-                  name: fag-config-postgres
-                  key: POSTGRES_HOST_AUTH_METHOD
-            - name: POSTGRES_PASSWORD
+
+            - name: DATA_SOURCE_PASS
               valueFrom:
                 secretKeyRef:
                   name: fag-secrets-postgres
                   key: POSTGRES_PASSWORD
+
             - name: POSTGRES_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   name: fag-config
                   key: POSTGRES_ADDRESS
-            # - name: DATA_SOURCE_URI
-            #   value: $(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable
-            - name: DATA_SOURCE_NAME
-              value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable"
-            # - name: DATA_SOURCE_NAME
-            #   value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable"
+                  
+            - name: DATA_SOURCE_URI
+              value: $(POSTGRES_ADDRESS)/$(POSTGRES_DB)?sslmode=disable
       restartPolicy: Always
