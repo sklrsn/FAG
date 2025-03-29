@@ -22,3 +22,10 @@ kubectl get pods -n loki
 
 kubectl get secret -n loki loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode; echo
 kubectl port-forward -n loki service/loki-grafana 3000:80
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/autoscaler/vpa-release-1.0/vertical-pod-autoscaler/deploy/vpa-v1-crd-gen.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/autoscaler/vpa-release-1.0/vertical-pod-autoscaler/deploy/vpa-rbac.yaml
+helm repo add fairwinds-stable https://charts.fairwinds.com/stable
+helm install --name goldilocks --namespace goldilocks --set 
+installVPA=true fairwinds-stable/goldilocks
+kubectl -n goldilocks port-forward svc/goldilocks-dashboard 8080:80
