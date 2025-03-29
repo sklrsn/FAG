@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fag-database-postgres
+  labels:
+    app: fag-database-postgres
+spec:
+  selector:
+    matchLabels:
+      app: fag-database-postgres
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: fag-database-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 5432
+              name: db
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config-postgres
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config-postgres
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_HOST_AUTH_METHOD
+              valueFrom:
+                configMapKeyRef:
+                  name: fag-config-postgres
+                  key: POSTGRES_HOST_AUTH_METHOD
+                  
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fag-secrets-postgres
+                  key: POSTGRES_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fag-database-postgres
+spec:
+  selector:
+    app: fag-database-postgres
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - name: fag-database-postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432

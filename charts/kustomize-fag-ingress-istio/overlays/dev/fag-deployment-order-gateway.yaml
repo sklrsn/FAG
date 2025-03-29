@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fag-order-gateway
+  labels:
+    app: fag-order-gateway
+spec:
+  selector:
+    matchLabels:
+      app: fag-order-gateway
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: fag-order-gateway

@@ -1,0 +1,47 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: fag-order-gateway
+    path: fag-deployment-order-gateway.yaml
+  - target:
+      kind: Ingress
+      name: nginx-ingress-fag-order-gateway
+    path: fag-ingress-order-gateway.yaml
+  - target:
+      kind: ConfigMap
+      name: fag-config
+    path: fag-configmap-environment.yaml
+  - target:
+      kind: Secret
+      name: tls-secret-nginx-jaegar
+    path: fag-secrets-jaegar.yaml
+  - target:
+      kind: Secret
+      name: tls-secret-nginx-order-gateway
+    path: fag-secrets-order-gateway.yaml
+  - target:
+      kind: Role
+      name: fag-role
+    path: fag-role.yaml
+  - target:
+      kind: Deployment
+      name: fag-database-postgres
+    path: fag-deployment-postgres.yaml
+  - target:
+      kind: Secret
+      name: fag-secrets-postgres
+    path: fag-secrets-postgres.yaml
+  - target:
+      kind: Deployment
+      name: fag-postgres-metrics-exporter
+    path: fag-deployment-postgres-metrics-exporter.yaml
+  - target:
+      kind: ConfigMap
+      name: fag-config-postgres
+    path: fag-configmap-postgres.yaml
