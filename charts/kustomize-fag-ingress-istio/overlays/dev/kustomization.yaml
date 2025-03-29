@@ -10,8 +10,8 @@ patches:
       name: fag-order-gateway
     path: fag-deployment-order-gateway.yaml
   - target:
-      kind: Ingress
-      name: nginx-ingress-fag-order-gateway
+      kind: Gateway
+      name: fag-istio-gateway
     path: fag-ingress-order-gateway.yaml
   - target:
       kind: ConfigMap
