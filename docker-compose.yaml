@@ -62,3 +62,9 @@ services:
       - "14268:14268" # Jaeger collector HTTP
       - "14250:14250" # Jaeger gRPC
       - "9411:9411"   # Zipkin compatibility
+  postgres:
+    image: postgres:17
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: Secret

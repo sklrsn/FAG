@@ -13,3 +13,4 @@ data:
   OTEL_EXPORTER_JAEGER_ENDPOINT: "fag-jaeger.default.svc.cluster.local:14250"
   OTEL_RECEIVER_OTLP_HTTP_PORT: "4318"
   OTEL_RECEIVER_OTLP_GRPC_PORT: "4317"
+  POSTGRES_ADDRESS: "fag-database-postgres.default.svc.cluster.local:5432"

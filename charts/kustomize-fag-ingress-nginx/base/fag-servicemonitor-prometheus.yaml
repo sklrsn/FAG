@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fag-postgres-metrics-exporter
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: fag-postgres-metrics-exporter
+  endpoints:
+    - port: "postgres-metrics"
+      interval: 5s
