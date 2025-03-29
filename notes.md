@@ -42,3 +42,5 @@ helm ls -n istio-system
 
 kubectl create namespace istio-ingress
 helm install istio-ingress istio/gateway -n istio-ingress --wait
+
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/latest/download/standard-install.yaml
