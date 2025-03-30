@@ -48,6 +48,10 @@ spec:
       backendRefs:
         - name: fag-order-gateway
           port: 8080
+          weight: 100
+        - name: fag-order-gateway-canary
+          port: 8080
+          weight: 0
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute

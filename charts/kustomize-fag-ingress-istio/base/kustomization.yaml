@@ -12,3 +12,4 @@ resources:
   - fag-deployment-postgres.yaml
   - fag-secrets-postgres.yaml
   - fag-configmap-postgres.yaml
+  - fag-deployment-order-gateway-canary.yaml
