@@ -1,4 +1,11 @@
 apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: istio
+spec:
+  controllerName: istio.io/gateway-controller
+---
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: fag-istio-gateway
@@ -15,10 +22,14 @@ spec:
           - name: tls-secret-istio-order-gateway
       allowedRoutes:
         namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              kubernetes.io/metadata.name: default
+          from: All
+    - name: http
+      port: 80
+      protocol: HTTP
+      hostname: "www.dev.sklrsn.in"
+      allowedRoutes:
+        kinds:
+          - kind: HTTPRoute
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -27,8 +38,8 @@ metadata:
 spec:
   parentRefs:
     - name: fag-istio-gateway
-      namespace: istio-system
-  hostnames: ["www.dev.sklrsn.in"]
+  hostnames:
+    - "www.dev.sklrsn.in"
   rules:
     - matches:
         - path:
@@ -37,3 +48,20 @@ spec:
       backendRefs:
         - name: fag-order-gateway
           port: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: http-redirect
+spec:
+  parentRefs:
+    - name: fag-istio-gateway
+      sectionName: http
+  hostnames:
+    - "www.dev.sklrsn.in"
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301

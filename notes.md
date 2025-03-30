@@ -31,16 +31,17 @@ installVPA=true fairwinds-stable/goldilocks
 kubectl -n goldilocks port-forward svc/goldilocks-dashboard 8080:80
 
 #Istio
-https://istio.io/latest/docs/setup/install/helm/
+# Download Istio
+brew install istioctl
 
-helm repo add istio https://istio-release.storage.googleapis.com/charts
-helm repo update
-helm install istio-base istio/base -n istio-system --set defaultRevision=default --create-namespace
-helm ls -n istio-system
-helm install istiod istio/istiod -n istio-system --wait
-helm ls -n istio-system
+# Install Istio with the demo profile and Gateway API enabled
+istioctl install --set profile=demo --set "components.pilot.k8s.overlays[0].name=gateway-api-support" -y
 
-kubectl create namespace istio-ingress
-helm install istio-ingress istio/gateway -n istio-ingress --wait
+# Install Gateway API CRDs
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
 
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/latest/download/standard-install.yaml
+# Verify installation
+kubectl get pods -n istio-system
+
+kubectl create namespace dev
+kubectl label namespace dev istio.io/inject=enabled
