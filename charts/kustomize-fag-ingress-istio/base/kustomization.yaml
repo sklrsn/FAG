@@ -1,0 +1,16 @@
+resources:
+  - fag-configmap-environment.yaml
+  - fag-deployment-order-gateway.yaml
+  - fag-deployment-shipping-rpc-service.yaml
+  - fag-daemonset-jaeger.yaml
+  - fag-deployment-order-rpc-service.yaml
+  - fag-daemonset-otel.yaml
+  - fag-deployment-payment-rpc-service.yaml
+  - fag-secrets.yaml
+  - fag-sa.yaml
+  - fag-ingress-order-gateway.yaml
+  - fag-deployment-postgres.yaml
+  - fag-secrets-postgres.yaml
+  - fag-configmap-postgres.yaml
+  - fag-deployment-order-gateway-canary.yaml
+  - fag-peerauthentication-mTLS.yaml

@@ -1,0 +1,16 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: fag-config
+namespace: dev
+data:
+  ORDER_ENGINE_ADDRESS: "fag-order-rpc-engine.dev.svc.cluster.local:9091"
+  PAYMENT_ENGINE_ADDRESS: "fag-payment-rpc-engine.dev.svc.cluster.local:9092"
+  SHIPPING_ENGINE_ADDRESS: "fag-shipping-rpc-engine.dev.svc.cluster.local:9093"
+  OTEL_ENDPOINT: "fag-otel.dev.svc.cluster.local:4317"
+  COLLECTOR_ZIPKIN_HTTP_PORT: "9411"
+  OTEL_RESOURCE_ATTRIBUTES: "service.name=otel-collector"
+  OTEL_EXPORTER_JAEGER_ENDPOINT: "fag-jaeger.dev.svc.cluster.local:14250"
+  OTEL_RECEIVER_OTLP_HTTP_PORT: "4318"
+  OTEL_RECEIVER_OTLP_GRPC_PORT: "4317"
+  POSTGRES_ADDRESS: fag-database-postgres.dev.svc.cluster.local:5432
