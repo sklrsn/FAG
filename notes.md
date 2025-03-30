@@ -41,4 +41,4 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 kubectl get pods -n istio-system
 
 kubectl create namespace dev
-kubectl label namespace dev istio.io/inject=enabled
+kubectl label namespace dev istio-injection=enabled
