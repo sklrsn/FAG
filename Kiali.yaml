@@ -1,0 +1,124 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    additional_display_details:
+    - annotation: kiali.io/api-spec
+      icon_annotation: kiali.io/api-type
+      title: API Documentation
+    auth:
+      openid: {}
+      openshift:
+        client_id_prefix: kiali
+      strategy: anonymous
+    clustering:
+      autodetect_secrets:
+        enabled: true
+        label: kiali.io/multiCluster=true
+      clusters: []
+    deployment:
+      additional_service_yaml: {}
+      affinity:
+        node: {}
+        pod: {}
+        pod_anti: {}
+      cluster_wide_access: true
+      configmap_annotations: {}
+      custom_envs: []
+      custom_secrets: []
+      dns:
+        config: {}
+        policy: ""
+      host_aliases: []
+      hpa:
+        api_version: autoscaling/v2
+        spec: {}
+      image_digest: ""
+      image_name: quay.io/kiali/kiali
+      image_pull_policy: Always
+      image_pull_secrets: []
+      image_version: v2.7.1
+      ingress:
+        additional_labels: {}
+        class_name: nginx
+        override_yaml:
+          metadata: {}
+      instance_name: kiali
+      logger:
+        log_format: text
+        log_level: info
+        sampler_rate: "1"
+        time_field_format: 2006-01-02T15:04:05Z07:00
+      namespace: istio-system
+      node_selector: {}
+      pod_annotations: {}
+      pod_labels: {}
+      priority_class_name: ""
+      probes:
+        liveness:
+          initial_delay_seconds: 5
+          period_seconds: 30
+        readiness:
+          initial_delay_seconds: 5
+          period_seconds: 30
+        startup:
+          failure_threshold: 6
+          initial_delay_seconds: 30
+          period_seconds: 10
+      remote_cluster_resources_only: false
+      replicas: 1
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 64Mi
+      secret_name: kiali
+      security_context: {}
+      service_annotations: {}
+      service_type: ""
+      tolerations: []
+      topology_spread_constraints: []
+      version_label: v2.7.1
+      view_only_mode: false
+    external_services:
+      custom_dashboards:
+        enabled: true
+      istio:
+        root_namespace: istio-system
+    identity:
+      cert_file: ""
+      private_key_file: ""
+    istio_namespace: istio-system
+    kiali_feature_flags:
+      disabled_features: []
+      validations:
+        ignore:
+        - KIA1301
+    login_token:
+      signing_key: shL4WudhdHmkeqlFvyfBxT8x36ywE4wS
+    server:
+      observability:
+        metrics:
+          enabled: true
+          port: 9090
+      port: 20001
+      web_root: /kiali
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kiali-server
+    meta.helm.sh/release-namespace: istio-system
+  creationTimestamp: "2025-03-30T20:47:14Z"
+  labels:
+    app: kiali
+    app.kubernetes.io/instance: kiali
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kiali
+    app.kubernetes.io/part-of: kiali
+    app.kubernetes.io/version: v2.7.1
+    helm.sh/chart: kiali-server-2.7.1
+    version: v2.7.1
+  name: kiali
+  namespace: istio-system
+  resourceVersion: "34617"
+  uid: 7fd07d09-323e-404f-b46c-b7af71478da4

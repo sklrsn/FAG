@@ -42,3 +42,17 @@ kubectl get pods -n istio-system
 
 kubectl create namespace dev
 kubectl label namespace dev istio-injection=enabled
+
+---
+#Kiali
+helm install kiali-server kiali/kiali-server -n istio-system --create-namespace --atomic
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/prometheus.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/grafana.yaml
+
+```bash
+    auth:
+      openid: {}
+      openshift:
+        client_id_prefix: kiali
+      strategy: anonymous
+```
