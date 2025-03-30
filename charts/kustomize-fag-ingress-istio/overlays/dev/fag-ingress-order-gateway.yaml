@@ -15,7 +15,11 @@ spec:
           - name: tls-secret-istio-order-gateway
       allowedRoutes:
         namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              kubernetes.io/metadata.name: default
+          from: All
+    - name: http
+      port: 80
+      protocol: HTTP
+      hostname: "www.dev.sklrsn.in"
+      allowedRoutes:
+        kinds:
+          - kind: HTTPRoute
