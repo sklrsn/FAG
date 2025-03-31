@@ -4,4 +4,4 @@ metadata:
   name: fag-peer-authentication
 spec:
   mtls:
-    mode: PERMISSIVE
+    mode: STRICT #PERMISSIVE

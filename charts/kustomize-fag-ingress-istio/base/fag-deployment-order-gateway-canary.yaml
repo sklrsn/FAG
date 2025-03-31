@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: fag-order-gateway-canary
-  replicas: 10
+  replicas: 1
   strategy:
     rollingUpdate:
       maxSurge: 25%
