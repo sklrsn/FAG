@@ -14,3 +14,5 @@ resources:
   - fag-configmap-postgres.yaml
   - fag-deployment-order-gateway-canary.yaml
   - fag-peerauthentication-mTLS.yaml
+  - fag-deployment-order-gateway-hpa.yaml
+  - fag-deployment-order-gateway-vpa.yaml

@@ -56,3 +56,12 @@ kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samp
         client_id_prefix: kiali
       strategy: anonymous
 ```
+
+# HPA/VPA
+
+HPA
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+VPA
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/autoscaler/vpa-release-1.0/vertical-pod-autoscaler/deploy/vpa-v1-crd-gen.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/autoscaler/vpa-release-1.0/vertical-pod-autoscaler/deploy/vpa-rbac.yaml
