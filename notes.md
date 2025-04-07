@@ -45,6 +45,7 @@ kubectl label namespace dev istio-injection=enabled
 
 ---
 #Kiali
+helm repo add kiali https://kiali.org/helm-charts
 helm install kiali-server kiali/kiali-server -n istio-system --create-namespace --atomic
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/prometheus.yaml
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/grafana.yaml
