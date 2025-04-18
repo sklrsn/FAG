@@ -6,7 +6,8 @@ package graph
 
 import (
 	"context"
-	"fmt"
+	"errors"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/sklrsn/FAG/orders-graphql-stream/graph/model"
@@ -14,27 +15,164 @@ import (
 
 // Orders is the resolver for the orders field.
 func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
-	panic(fmt.Errorf("not implemented: Orders - orders"))
+	rs := r.DbConn.Orders()
+	orders := make([]*model.Order, 0)
+	for _, r := range rs {
+		orders = append(orders, &model.Order{
+			ID:       uuid.MustParse(r.ID),
+			Name:     r.Name,
+			Quantity: r.Quantity,
+			Created:  r.Created,
+			User: &model.User{
+				ID:   uuid.MustParse(r.User.ID),
+				Name: r.User.Name,
+			},
+			Payment: &model.Payment{
+				ID:      uuid.MustParse(r.Payment.ID),
+				Amount:  r.Payment.Amount,
+				Created: r.Payment.Created,
+			},
+			Shipping: &model.Shipping{
+				ID:      uuid.MustParse(r.Shipping.ID),
+				Created: r.Shipping.Created,
+				Address: r.Shipping.Address,
+			},
+		})
+	}
+	return orders, nil
+}
+
+// Payments is the resolver for the payments field.
+func (r *queryResolver) Payments(ctx context.Context) ([]*model.Payment, error) {
+	rs := r.DbConn.Orders()
+	payments := make([]*model.Payment, 0)
+	for _, r := range rs {
+		payments = append(payments, &model.Payment{
+			ID:      uuid.MustParse(r.Payment.ID),
+			Amount:  r.Payment.Amount,
+			Created: r.Payment.Created,
+		})
+	}
+	return payments, nil
+}
+
+// Deliveries is the resolver for the deliveries field.
+func (r *queryResolver) Deliveries(ctx context.Context) ([]*model.Shipping, error) {
+	rs := r.DbConn.Orders()
+	deliveries := make([]*model.Shipping, 0)
+	for _, r := range rs {
+		deliveries = append(deliveries, &model.Shipping{
+			ID:      uuid.MustParse(r.Shipping.ID),
+			Created: r.Shipping.Created,
+			Address: r.Shipping.Address,
+		})
+	}
+	return deliveries, nil
 }
 
 // Order is the resolver for the order field.
 func (r *queryResolver) Order(ctx context.Context, id uuid.UUID) (*model.Order, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
+	rs := r.DbConn.Orders()
+	for _, r := range rs {
+		if r.ID == id.String() {
+			return &model.Order{
+				ID:       uuid.MustParse(r.ID),
+				Name:     r.Name,
+				Quantity: r.Quantity,
+				Created:  r.Created,
+				User: &model.User{
+					ID:   uuid.MustParse(r.User.ID),
+					Name: r.Name,
+				},
+				Payment: &model.Payment{
+					ID:      uuid.MustParse(r.Payment.ID),
+					Amount:  r.Payment.Amount,
+					Created: r.Payment.Created,
+				},
+				Shipping: &model.Shipping{
+					ID:      uuid.MustParse(r.Shipping.ID),
+					Created: r.Shipping.Created,
+					Address: r.Shipping.Address,
+				},
+			}, nil
+		}
+	}
+	return nil, errors.New("Order not found")
 }
 
 // Payment is the resolver for the payment field.
 func (r *queryResolver) Payment(ctx context.Context, id uuid.UUID) (*model.Payment, error) {
-	panic(fmt.Errorf("not implemented: Payment - payment"))
+	rs := r.DbConn.Orders()
+	for _, r := range rs {
+		if r.Payment.ID == id.String() {
+			return &model.Payment{
+				ID:      uuid.MustParse(r.Payment.ID),
+				Amount:  r.Payment.Amount,
+				Created: r.Payment.Created,
+			}, nil
+		}
+	}
+	return nil, errors.New("payment not found")
 }
 
 // Shipping is the resolver for the shipping field.
 func (r *queryResolver) Shipping(ctx context.Context, id uuid.UUID) (*model.Shipping, error) {
-	panic(fmt.Errorf("not implemented: Shipping - shipping"))
+	rs := r.DbConn.Orders()
+	for _, r := range rs {
+		if r.Shipping.ID == id.String() {
+			return &model.Shipping{
+				ID:      uuid.MustParse(r.Shipping.ID),
+				Created: r.Shipping.Created,
+				Address: r.Shipping.Address,
+			}, nil
+		}
+	}
+	return nil, errors.New("payment not found")
 }
 
 // Order is the resolver for the order field.
 func (r *subscriptionResolver) Order(ctx context.Context, id uuid.UUID) (<-chan *model.Order, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
+	orderCh := make(chan *model.Order)
+
+	go func() {
+		tiker := time.NewTicker(5 * time.Second)
+		defer tiker.Stop()
+
+		for {
+			select {
+			case <-tiker.C:
+				rs := r.DbConn.Orders()
+				for _, r := range rs {
+					if r.ID == id.String() {
+						orderCh <- &model.Order{
+							ID:       uuid.MustParse(r.ID),
+							Name:     r.Name,
+							Quantity: r.Quantity,
+							Created:  r.Created,
+							User: &model.User{
+								ID:   uuid.MustParse(r.User.ID),
+								Name: r.Name,
+							},
+							Payment: &model.Payment{
+								ID:      uuid.MustParse(r.Payment.ID),
+								Amount:  r.Payment.Amount,
+								Created: r.Payment.Created,
+							},
+							Shipping: &model.Shipping{
+								ID:      uuid.MustParse(r.Shipping.ID),
+								Created: r.Shipping.Created,
+								Address: r.Shipping.Address,
+							},
+						}
+					}
+				}
+			case <-ctx.Done():
+				return
+			}
+		}
+	}()
+
+	return orderCh, nil
 }
 
 // Query returns QueryResolver implementation.

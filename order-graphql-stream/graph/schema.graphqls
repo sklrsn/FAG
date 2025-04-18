@@ -33,6 +33,8 @@ type Shipping {
 
 type Query {
   orders: [Order]!
+  payments: [Payment]!
+  deliveries: [Shipping]!
   order(id: UUID!): Order
   payment(id: UUID!): Payment
   shipping(id: UUID!): Shipping

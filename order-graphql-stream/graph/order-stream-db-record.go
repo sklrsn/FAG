@@ -30,6 +30,7 @@ type Record struct {
 
 type DbConn interface {
 	Connect() *DbStore
+	Orders() []Record
 }
 
 type DbStore struct {
@@ -53,4 +54,8 @@ func (db *DbStore) Load() error {
 	}
 	db.records = records
 	return nil
+}
+
+func (db *DbStore) Orders() []Record {
+	return db.records
 }
