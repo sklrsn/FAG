@@ -1,0 +1,43 @@
+# GraphQL schema
+
+scalar Int64
+scalar UUID
+scalar Time
+
+type Order {
+  id: UUID!
+  name: String!
+  quantity: Int64!
+  created: Time!
+  user: User!
+  payment: Payment!
+  shipping: Shipping!
+}
+
+type User {
+  id: UUID!
+  name: String!
+}
+
+type Payment {
+  id: UUID!
+  amount: Int64!
+  created: Time!
+}
+
+type Shipping {
+  id: UUID!
+  created: Time!
+  address: String!
+}
+
+type Query {
+  orders: [Order]!
+  order(id: UUID!): Order
+  payments(id: UUID!): Payment
+  shipping(id: UUID!): Shipping
+}
+
+type Subscription {
+  order(id: UUID!): Order
+}

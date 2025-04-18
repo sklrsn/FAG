@@ -2,6 +2,7 @@ go 1.24.0
 
 use (
 	./order-gateway
+	./order-graphql-stream
 	./order-rpc-service
 	./payment-rpc-service
 	./shipping-rpc-service
