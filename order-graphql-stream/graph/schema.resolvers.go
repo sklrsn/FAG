@@ -38,10 +38,10 @@ func (r *subscriptionResolver) Order(ctx context.Context, id uuid.UUID) (<-chan 
 }
 
 // Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+func (r *OrdersResolver) Query() QueryResolver { return &queryResolver{r} }
 
 // Subscription returns SubscriptionResolver implementation.
-func (r *Resolver) Subscription() SubscriptionResolver { return &subscriptionResolver{r} }
+func (r *OrdersResolver) Subscription() SubscriptionResolver { return &subscriptionResolver{r} }
 
-type queryResolver struct{ *Resolver }
-type subscriptionResolver struct{ *Resolver }
+type queryResolver struct{ *OrdersResolver }
+type subscriptionResolver struct{ *OrdersResolver }

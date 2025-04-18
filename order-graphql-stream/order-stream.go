@@ -20,7 +20,9 @@ func main() {
 	srv := handler.New(
 		graph.NewExecutableSchema(
 			graph.Config{
-				Resolvers: &graph.Resolver{},
+				Resolvers: &graph.OrdersResolver{
+					DbConn: new(graph.DbStore).Connect(),
+				},
 			}))
 
 	srv.AddTransport(transport.Websocket{})

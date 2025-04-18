@@ -1,7 +1,8 @@
-package main
+package graph
 
 import (
 	"encoding/json"
+	"log"
 	"os"
 	"time"
 )
@@ -27,16 +28,29 @@ type Record struct {
 	} `json:"shipping"`
 }
 
-func PrepareDB() []Record {
+type DbConn interface {
+	Connect() *DbStore
+}
+
+type DbStore struct {
+	records []Record
+}
+
+func (db *DbStore) Connect() *DbStore {
+	log.Println("Connected")
+	db.Load()
+	return db
+}
+
+func (db *DbStore) Load() error {
 	data, err := os.ReadFile("/opr/data/data.json")
 	if err != nil {
-		panic(err)
+		return err
 	}
-
 	var records []Record
 	if err := json.Unmarshal(data, &records); err != nil {
-		panic(err)
+		return err
 	}
-
-	return records
+	db.records = records
+	return nil
 }
