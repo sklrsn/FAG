@@ -42,6 +42,7 @@ func main() {
 		Addr:    fmt.Sprintf(":%v", streamPort),
 		Handler: router,
 	}
+
 	log.Println("starting order graphql engine")
 	log.Fatalf("%v", server.ListenAndServe())
 }
