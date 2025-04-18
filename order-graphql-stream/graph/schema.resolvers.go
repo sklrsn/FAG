@@ -22,9 +22,9 @@ func (r *queryResolver) Order(ctx context.Context, id uuid.UUID) (*model.Order, 
 	panic(fmt.Errorf("not implemented: Order - order"))
 }
 
-// Payments is the resolver for the payments field.
-func (r *queryResolver) Payments(ctx context.Context, id uuid.UUID) (*model.Payment, error) {
-	panic(fmt.Errorf("not implemented: Payments - payments"))
+// Payment is the resolver for the payment field.
+func (r *queryResolver) Payment(ctx context.Context, id uuid.UUID) (*model.Payment, error) {
+	panic(fmt.Errorf("not implemented: Payment - payment"))
 }
 
 // Shipping is the resolver for the shipping field.
