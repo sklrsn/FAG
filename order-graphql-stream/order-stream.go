@@ -10,6 +10,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/lru"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 	"github.com/sklrsn/FAG/orders-graphql-stream/graph"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -25,7 +26,13 @@ func main() {
 				},
 			}))
 
-	srv.AddTransport(transport.Websocket{})
+	srv.AddTransport(transport.Websocket{
+		Upgrader: websocket.Upgrader{
+			CheckOrigin: func(r *http.Request) bool {
+				return true
+			},
+		},
+	})
 	srv.AddTransport(transport.Options{})
 	srv.AddTransport(transport.GET{})
 	srv.AddTransport(transport.POST{})

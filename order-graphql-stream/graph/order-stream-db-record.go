@@ -44,7 +44,7 @@ func (db *DbStore) Connect() *DbStore {
 }
 
 func (db *DbStore) Load() error {
-	data, err := os.ReadFile("/opr/data/data.json")
+	data, err := os.ReadFile("/opt/data/data.json")
 	if err != nil {
 		return err
 	}
