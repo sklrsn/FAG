@@ -4,10 +4,6 @@ RUN apt-get update -y && apt-get install -y dnsutils net-tools curl telnet iputi
 
 WORKDIR /go/src/github.com/sklrsn/FAG/order-stream
 RUN go clean -cache
-# COPY *.go .
-# COPY data.json /opt/data/data.json
-# COPY go.mod .
-# COPY go.sum .
 ADD . .
 
 RUN go build -o /opt/bin/order-stream
