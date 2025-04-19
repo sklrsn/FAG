@@ -2,6 +2,7 @@ package graph
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -37,14 +38,23 @@ type DbStore struct {
 	records []Record
 }
 
+var (
+	dataFile = "data.json"
+	fullPath = fmt.Sprintf("/opt/data/%v", dataFile)
+)
+
 func (db *DbStore) Connect() *DbStore {
 	log.Println("Connected")
-	db.Load()
+	if err := db.Load(fullPath); err != nil {
+		if err := db.Load("data.json"); err != nil {
+			panic(err)
+		}
+	}
 	return db
 }
 
-func (db *DbStore) Load() error {
-	data, err := os.ReadFile("/opt/data/data.json")
+func (db *DbStore) Load(dataPath string) error {
+	data, err := os.ReadFile(dataPath)
 	if err != nil {
 		return err
 	}
