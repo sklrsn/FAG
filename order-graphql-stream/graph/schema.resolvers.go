@@ -7,8 +7,10 @@ package graph
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/google/uuid"
 	"github.com/sklrsn/FAG/orders-graphql-stream/graph/model"
 )
@@ -127,6 +129,7 @@ func (r *queryResolver) Shipping(ctx context.Context, id uuid.UUID) (*model.Ship
 			}, nil
 		}
 	}
+	graphql.AddErrorf(ctx, fmt.Sprintf("payment ID=%v missing", id.String()))
 	return nil, errors.New("payment not found")
 }
 
