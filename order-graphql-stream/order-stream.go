@@ -18,11 +18,12 @@ import (
 const streamPort = "9094"
 
 func main() {
+	dbConn := new(graph.DbStore).Connect()
 	srv := handler.New(
 		graph.NewExecutableSchema(
 			graph.Config{
 				Resolvers: &graph.OrdersResolver{
-					DbConn: new(graph.DbStore).Connect(),
+					DbConn: dbConn,
 				},
 			}))
 
@@ -47,7 +48,7 @@ func main() {
 	srv.Use(extension.FixedComplexityLimit(20))
 
 	router := mux.NewRouter()
-	router.Handle("/graphql", srv)
+	router.Handle("/graphql", graph.OrderMiddleware(dbConn, srv))
 
 	server := http.Server{
 		Addr:    fmt.Sprintf(":%v", streamPort),

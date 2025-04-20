@@ -74,32 +74,45 @@ func (r *queryResolver) Deliveries(ctx context.Context) ([]*model.Shipping, erro
 
 // Order is the resolver for the order field.
 func (r *queryResolver) Order(ctx context.Context, id uuid.UUID) (*model.Order, error) {
-	rs := r.DbConn.Orders()
-	for _, r := range rs {
-		if r.ID == id.String() {
-			return &model.Order{
-				ID:       uuid.MustParse(r.ID),
-				Name:     r.Name,
-				Quantity: r.Quantity,
-				Created:  r.Created,
-				User: &model.User{
-					ID:   uuid.MustParse(r.User.ID),
-					Name: r.Name,
-				},
-				Payment: &model.Payment{
-					ID:      uuid.MustParse(r.Payment.ID),
-					Amount:  r.Payment.Amount,
-					Created: r.Payment.Created,
-				},
-				Shipping: &model.Shipping{
-					ID:      uuid.MustParse(r.Shipping.ID),
-					Created: r.Shipping.Created,
-					Address: r.Shipping.Address,
-				},
-			}, nil
+	var (
+		rec Record
+	)
+	if dl := For(ctx); dl != nil {
+		orderRecord, err := dl.OrderLoader.Load(ctx, id.String())
+		if err != nil {
+			return nil, err
+		}
+		rec = orderRecord
+	} else {
+		rs := r.DbConn.Orders()
+		for _, orderRecord := range rs {
+			if orderRecord.ID == id.String() {
+				rec = orderRecord
+				break
+			}
 		}
 	}
-	return nil, errors.New("Order not found")
+
+	return &model.Order{
+		ID:       uuid.MustParse(rec.ID),
+		Name:     rec.Name,
+		Quantity: rec.Quantity,
+		Created:  rec.Created,
+		User: &model.User{
+			ID:   uuid.MustParse(rec.User.ID),
+			Name: rec.Name,
+		},
+		Payment: &model.Payment{
+			ID:      uuid.MustParse(rec.Payment.ID),
+			Amount:  rec.Payment.Amount,
+			Created: rec.Payment.Created,
+		},
+		Shipping: &model.Shipping{
+			ID:      uuid.MustParse(rec.Shipping.ID),
+			Created: rec.Shipping.Created,
+			Address: rec.Shipping.Address,
+		},
+	}, nil
 }
 
 // Payment is the resolver for the payment field.

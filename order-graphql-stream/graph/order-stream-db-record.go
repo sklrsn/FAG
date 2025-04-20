@@ -32,6 +32,8 @@ type Record struct {
 type DbConn interface {
 	Connect() *DbStore
 	Orders() []Record
+
+	Order(id string) (Record, error)
 }
 
 type DbStore struct {
@@ -68,4 +70,13 @@ func (db *DbStore) Load(dataPath string) error {
 
 func (db *DbStore) Orders() []Record {
 	return db.records
+}
+
+func (db *DbStore) Order(id string) (Record, error) {
+	for _, r := range db.records {
+		if r.ID == id {
+			return r, nil
+		}
+	}
+	return Record{}, fmt.Errorf("record not found")
 }
