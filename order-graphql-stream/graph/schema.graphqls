@@ -43,3 +43,11 @@ type Query {
 type Subscription {
   order(id: UUID!): Order
 }
+
+enum ORDER_STATUS {
+  CREATED
+  PROCESSED
+  SHIPPED
+  DELIVERED
+  RETURNED
+}

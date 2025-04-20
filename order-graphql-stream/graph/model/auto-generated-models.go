@@ -3,6 +3,10 @@
 package model
 
 import (
+	"bytes"
+	"fmt"
+	"io"
+	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -39,4 +43,65 @@ type Subscription struct {
 type User struct {
 	ID   uuid.UUID `json:"id"`
 	Name string    `json:"name"`
+}
+
+type OrderStatus string
+
+const (
+	OrderStatusCreated   OrderStatus = "CREATED"
+	OrderStatusProcessed OrderStatus = "PROCESSED"
+	OrderStatusShipped   OrderStatus = "SHIPPED"
+	OrderStatusDelivered OrderStatus = "DELIVERED"
+	OrderStatusReturned  OrderStatus = "RETURNED"
+)
+
+var AllOrderStatus = []OrderStatus{
+	OrderStatusCreated,
+	OrderStatusProcessed,
+	OrderStatusShipped,
+	OrderStatusDelivered,
+	OrderStatusReturned,
+}
+
+func (e OrderStatus) IsValid() bool {
+	switch e {
+	case OrderStatusCreated, OrderStatusProcessed, OrderStatusShipped, OrderStatusDelivered, OrderStatusReturned:
+		return true
+	}
+	return false
+}
+
+func (e OrderStatus) String() string {
+	return string(e)
+}
+
+func (e *OrderStatus) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OrderStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ORDER_STATUS", str)
+	}
+	return nil
+}
+
+func (e OrderStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *OrderStatus) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e OrderStatus) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
 }

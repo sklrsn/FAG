@@ -44,6 +44,8 @@ func main() {
 		Cache: lru.New[string](100),
 	})
 
+	srv.Use(extension.FixedComplexityLimit(20))
+
 	router := mux.NewRouter()
 	router.Handle("/graphql", srv)
 
