@@ -129,7 +129,7 @@ func (r *queryResolver) Shipping(ctx context.Context, id uuid.UUID) (*model.Ship
 			}, nil
 		}
 	}
-	graphql.AddErrorf(ctx, fmt.Sprintf("payment ID=%v missing", id.String()))
+	graphql.AddError(ctx, fmt.Errorf("paymentID=%v not found", id))
 	return nil, errors.New("payment not found")
 }
 
